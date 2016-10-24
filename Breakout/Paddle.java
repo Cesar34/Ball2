@@ -11,7 +11,7 @@ import java.awt.Color;
 public class Paddle extends Actor
 {
     /////////////// fields ////////////////////
-  
+    BreakoutWorld mundo;
     /** Width of the paddle */
     private int width = 60;
   
@@ -44,6 +44,7 @@ public class Paddle extends Actor
     public Paddle(int theWidth, int theHeight, 
                   Color theColor, int theAmount)
     {
+        mundo = (BreakoutWorld)getWorld();
         width = theWidth;
         height = theHeight;
         color = theColor;
@@ -59,15 +60,16 @@ public class Paddle extends Actor
      */
     public void act() 
     {      
+//        System.out.println(this.getX());
         if(Greenfoot.isKeyDown("left"))
         {
-            BreakoutWorld mundo = (BreakoutWorld)getWorld();
-            
-            move(-3);
+            if(getX() > width/2)
+                move(-3);
         }
         if(Greenfoot.isKeyDown("Right"))
         {
-            move(3);
+            if(getX() <= (getWorld().getWidth()) - width/2)
+                move(3);
         }
     }
     

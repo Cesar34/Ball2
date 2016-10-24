@@ -68,11 +68,35 @@ public class Ball extends Actor
      * one of the edges of the world
      */
     public void act() 
-    {      
-        move(velY);
-        setLocation(getX()+velY, getY()+velY);
+    {
+        boolean lado = false;
+        if(getX() < getWorld().getWidth() - this.width/2 && !lado)
+        {
+            mueveDerecha();
+        }
+        else{
+            System.out.println("aqui");
+            lado = true;
+        }
+        if(lado){
+            System.out.println(getX());
+            mueveIzquierda();
+        }
+        //if(lado)
+            //mueveIzquierda();
     }
     
+    public void mueveDerecha(){
+        move(velY);
+        setLocation(getX()+velX, getY()+velY);
+        
+    }
+    
+    public void mueveIzquierda(){
+        move(velY);
+        setLocation(getX()- velY, getY()+velY);
+        
+    }
     /**
      * Method to set the ball color
      */

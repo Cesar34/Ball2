@@ -19,6 +19,7 @@ public class BreakoutWorld extends World
 {
    /////////////////// constants //////////////////////////
    
+   
    /** the width of the bricks in pixels (cells) */
    public static final int BRICK_WIDTH = 36; 
    /** the height of the bricks in pixels (cells) */
