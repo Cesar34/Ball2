@@ -14,7 +14,7 @@ public class Ball extends Actor
 {
 
     //////////// fields /////////////////////////////
-    
+    boolean lado;
     /** the radius of this ball */
     private int radius = 10;
     
@@ -25,7 +25,7 @@ public class Ball extends Actor
     private Color color = Color.BLACK;
     
     /** the amount of change in x during each act */
-    private int velX;
+    private int velX = 4;
     
     /** the amount of change in y during each act */
     private int velY = 2;
@@ -38,9 +38,10 @@ public class Ball extends Actor
     public Ball()
     {
         // set velX to 1-2 or -1 to -2
-        velX = Greenfoot.getRandomNumber(2) + 1;
+        lado = true;
+        //velX = Greenfoot.getRandomNumber(2) + 1;
         if (Greenfoot.getRandomNumber(2) == 0)
-           velX = -1 * velX;
+          // velX = -1 * velX;
         updateImage();
     }
     
@@ -56,8 +57,9 @@ public class Ball extends Actor
     {
         radius = theRadius;
         color = theColor;
-        velX = theVelX;
+        //velX = theVelX;
         velY = theVelY;
+        lado = true;
         updateImage();
     }
     
@@ -69,18 +71,25 @@ public class Ball extends Actor
      */
     public void act() 
     {
-        boolean lado = false;
-        if(getX() < getWorld().getWidth() - this.width/2 && !lado)
-        {
-            mueveDerecha();
-        }
-        else{
-            System.out.println("aqui");
-            lado = true;
+            if(!lado){
+            if(getX() < getWorld().getWidth() - this.width/2)
+            {
+                mueveDerecha();
+            }
+            else{
+                System.out.println("aqui");
+                lado = true;
+            }
         }
         if(lado){
-            System.out.println(getX());
-            mueveIzquierda();
+            if(getX() >= this.width/2)
+            {
+                mueveIzquierda();
+            }
+            else{
+                System.out.println("aqui");
+                lado = false;
+            }
         }
         //if(lado)
             //mueveIzquierda();
@@ -88,13 +97,13 @@ public class Ball extends Actor
     
     public void mueveDerecha(){
         move(velY);
-        setLocation(getX()+velX, getY()+velY);
+        setLocation(getX()+velY, getY()+velY);
         
     }
     
     public void mueveIzquierda(){
         move(velY);
-        setLocation(getX()- velY, getY()+velY);
+        setLocation(getX()- velX, getY()+velY);
         
     }
     /**
