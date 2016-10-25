@@ -58,7 +58,7 @@ public class Ball extends Actor
     {
         radius = theRadius;
         color = theColor;
-        velX = theVelX;
+        velX = theVelX = 4;
         velY = theVelY;
         lado = true;
         updateImage();
@@ -72,13 +72,14 @@ public class Ball extends Actor
      */
     public void act() 
     {
+        //setLocation(getX()+velX,getY()+velY);
             if(!lado){
-            if(getX() < getWorld().getWidth() - this.width/2)
+            if(getX()<=0 || getX() < getWorld().getWidth() - this.width/2)
             {
                 mueveDerecha();
             }
             else{
-                System.out.println("aqui");
+                //System.out.println("aqui");
                 lado = true;
             }
         }
@@ -92,6 +93,7 @@ public class Ball extends Actor
                 lado = false;
             }
         }
+        
         if(isTouching(Paddle.class))
         {
             velY = -velY;
@@ -111,24 +113,18 @@ public class Ball extends Actor
         
             World mundo = getWorld();
             List lista=mundo.getObjects(Brick.class);
-            if(lista.size()==0){
-             Label etiquetaFin = new Label("WINNER",20);
-             mundo.addObject(etiquetaFin,BreakoutWorld.WIDTH/2,
-             BreakoutWorld.HEIGHT/2);
-             Greenfoot.stop();
-            }
         }
         
     public void mueveDerecha(){
         move(velY);
-        setLocation(getX()+velY, getY()+velY);
+        setLocation(getX()+velX, getY()+velY);
         
     }
     
     public void mueveIzquierda(){
         move(velY);
         setLocation(getX()- velX, getY()+velY);
-        
+       
     }
     /**
      * Method to set the ball color
