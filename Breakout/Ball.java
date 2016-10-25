@@ -25,7 +25,7 @@ public class Ball extends Actor
     private Color color = Color.BLACK;
     
     /** the amount of change in x during each act */
-    private int velX = 4;
+    private int velX;
     
     /** the amount of change in y during each act */
     private int velY = 2;
@@ -39,10 +39,11 @@ public class Ball extends Actor
     {
         // set velX to 1-2 or -1 to -2
         lado = true;
-        //velX = Greenfoot.getRandomNumber(2) + 1;
+        velX = Greenfoot.getRandomNumber(2) + 1;
         if (Greenfoot.getRandomNumber(2) == 0)
-          // velX = -1 * velX;
+           velX = -1 * velX;
         updateImage();
+        setRotation(90);
     }
     
     /**
@@ -57,7 +58,7 @@ public class Ball extends Actor
     {
         radius = theRadius;
         color = theColor;
-        //velX = theVelX;
+        velX = theVelX;
         velY = theVelY;
         lado = true;
         updateImage();
@@ -87,14 +88,37 @@ public class Ball extends Actor
                 mueveIzquierda();
             }
             else{
-                System.out.println("aqui");
+                //System.out.println("aqui");
                 lado = false;
             }
         }
+        if(isTouching(Paddle.class))
+        {
+            velY = -velY;
+        }
+        if(isTouching(Brick.class))
+        {
+            velY = -velY;
+            removeTouching(Brick.class);
+        }
+        checaBloques();
         //if(lado)
             //mueveIzquierda();
     }
     
+    public void checaBloques()
+    {
+        
+            World mundo = getWorld();
+            List lista=mundo.getObjects(Brick.class);
+            if(lista.size()==0){
+             Label etiquetaFin = new Label("WINNER",20);
+             mundo.addObject(etiquetaFin,BreakoutWorld.WIDTH/2,
+             BreakoutWorld.HEIGHT/2);
+             Greenfoot.stop();
+            }
+        }
+        
     public void mueveDerecha(){
         move(velY);
         setLocation(getX()+velY, getY()+velY);
