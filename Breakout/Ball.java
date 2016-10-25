@@ -58,7 +58,7 @@ public class Ball extends Actor
     {
         radius = theRadius;
         color = theColor;
-        velX = theVelX = 4;
+        velX = theVelX;
         velY = theVelY;
         lado = true;
         updateImage();
