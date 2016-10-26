@@ -12,7 +12,6 @@ import java.util.List;
  */
 public class Ball extends Actor
 {
-
     //////////// fields /////////////////////////////
     boolean lado;
     /** the radius of this ball */
@@ -25,7 +24,7 @@ public class Ball extends Actor
     private Color color = Color.BLACK;
     
     /** the amount of change in x during each act */
-    private int velX = 4;
+    private int velX;
     
     /** the amount of change in y during each act */
     private int velY = 2;
@@ -39,10 +38,11 @@ public class Ball extends Actor
     {
         // set velX to 1-2 or -1 to -2
         lado = true;
-        //velX = Greenfoot.getRandomNumber(2) + 1;
+        velX = Greenfoot.getRandomNumber(2) + 1;
         if (Greenfoot.getRandomNumber(2) == 0)
-          // velX = -1 * velX;
+           velX = -1 * velX;
         updateImage();
+        setRotation(90);
     }
     
     /**
@@ -71,15 +71,31 @@ public class Ball extends Actor
      */
     public void act() 
     {
+
         if(!lado)
         {
             if(getX() < getWorld().getWidth() - this.width/2)
+
+                //setLocation(getX()+velX,getY()+velY);
+         
+            if(!lado)
+            {
+            if(getX()<=0 || getX() < getWorld().getWidth() - this.width/2)
+
             {
                  mueveDerecha();
             }
+        }
+        
+
             else
             {
                  lado = true;
+            }
+
+            else{
+                lado = true;
+
             }
         }
         if(lado)
@@ -89,25 +105,27 @@ public class Ball extends Actor
                 mueveIzquierda();
             }
             else{
-               // System.out.println("aqui");
+
                 lado = false;
             }
         }
-        
-        
-        //if(lado)
-          //mueveIzquierda();
-          
-          
-          
-       if(isTouching(Paddle.class))
+        if(isTouching(Paddle.class))
+        {
+            velY = -velY;
+        }
+        if(isTouching(Brick.class))
+        {
+            velY = -velY;
+            removeTouching(Brick.class);
+        }
+        checaBloques();
+        if(isTouching(Paddle.class))
        {
             velY = -velY;
             
        }
-            
-          quita();
-  }   
+       quita();
+    }
     public void quita()
     {
         if(isTouching(Brick.class))
@@ -115,16 +133,27 @@ public class Ball extends Actor
             removeTouching(Brick.class);
         }
     }
+//<<<<<<< HEAD
+//=======
+    
+    public void checaBloques()
+    {
+        
+            World mundo = getWorld();
+            List lista=mundo.getObjects(Brick.class);
+        }
+        
+//>>>>>>> origin/master
     public void mueveDerecha(){
         move(velY);
-        setLocation(getX()+velY, getY()+velY);
+        setLocation(getX()+velX, getY()+velY);
         
     }
     
     public void mueveIzquierda(){
         move(velY);
         setLocation(getX()- velX, getY()+velY);
-        
+       
     }
     /**
      * Method to set the ball color
@@ -135,6 +164,7 @@ public class Ball extends Actor
         updateImage();
     }
     
+
     /**
      * Method to create the image and set it for the ball 
      * If you change the ball width or color you should 

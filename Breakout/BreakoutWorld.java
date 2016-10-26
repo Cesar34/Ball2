@@ -50,6 +50,8 @@ public class BreakoutWorld extends World
   
    /** a message displayed for the user */
    private Message message = null;
+   
+   private Counter Vidas;
   
    //////////// constructors /////////////
   
@@ -60,6 +62,9 @@ public class BreakoutWorld extends World
    {
         super (WIDTH, HEIGHT, RESOLUTION,false);
         setUpBreakout();
+        Vidas = new Counter("Vidas: ");
+        addObject(Vidas,350,15);
+        Vidas.setValue(3);
    }
   
    /////////////// methods ///////////////
