@@ -57,7 +57,7 @@ public class Ball extends Actor
     {
         radius = theRadius;
         color = theColor;
-        //velX = theVelX;
+        velX = theVelX;
         velY = theVelY;
         lado = true;
         updateImage();
@@ -71,30 +71,50 @@ public class Ball extends Actor
      */
     public void act() 
     {
-            if(!lado){
+        if(!lado)
+        {
             if(getX() < getWorld().getWidth() - this.width/2)
             {
-                mueveDerecha();
+                 mueveDerecha();
             }
-            else{
-                System.out.println("aqui");
-                lado = true;
+            else
+            {
+                 lado = true;
             }
         }
-        if(lado){
+        if(lado)
+        {
             if(getX() >= this.width/2)
             {
                 mueveIzquierda();
             }
             else{
-                System.out.println("aqui");
+               // System.out.println("aqui");
                 lado = false;
             }
         }
+        
+        
         //if(lado)
-            //mueveIzquierda();
+          //mueveIzquierda();
+          
+          
+          
+       if(isTouching(Paddle.class))
+       {
+            velY = -velY;
+            
+       }
+            
+          quita();
+  }   
+    public void quita()
+    {
+        if(isTouching(Brick.class))
+        {
+            removeTouching(Brick.class);
+        }
     }
-    
     public void mueveDerecha(){
         move(velY);
         setLocation(getX()+velY, getY()+velY);
@@ -128,3 +148,4 @@ public class Ball extends Actor
         setImage(image);
     }
 }
+
